@@ -11,16 +11,17 @@ import java.util.List;
 public class GreetingController {
     // bridges java code with http layer
     @Autowired
+    // determines when to create an instance of the below instance
     private GreetingService greetingService;
 
-    @GetMapping("hello")
-    public Greeting greeting(@RequestParam(value = "name", required = false) String name) { // allows use of query in URL (?name=Evan)
-        return greetingService.generateGreeting(name);
-    }
+//    @GetMapping("hello")
+//    public Greeting greeting(@RequestParam(value = "name", required = false) String name) { // allows use of query in URL (?name=Evan)
+//        return greetingService.generateGreeting(name);
+//    }
 
     @GetMapping("search_greeting")
-    public Greeting searchGreeting(@RequestParam(value = "index", required = false) Integer index) {
-        return greetingService.getGreeting(index);
+    public List<Greeting> searchGreeting(@RequestParam(value = "name", required = false) String name, String greeting) {
+        return greetingService.findGreetingsByNameAndGreeting(name, greeting);
     }
 
     @GetMapping("greetings")
@@ -38,4 +39,15 @@ public class GreetingController {
     public Greeting createGreeting(@RequestBody Greeting newGreeting) {
         return greetingService.createGreeting(newGreeting);
     }
+
+    @PutMapping("greeting/{index}")
+    public Greeting updateGreeting(@PathVariable Integer index, @RequestBody Greeting updatedGreeting) {
+        return greetingService.updateGreeting(index, updatedGreeting);
+    }
+
+    @DeleteMapping("greeting/{index}")
+    public void deleteGreeting(@PathVariable Integer index) {
+        greetingService.deleteGreeting(index);
+    }
+
 }

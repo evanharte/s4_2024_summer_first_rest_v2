@@ -3,6 +3,7 @@ package com.keyin.hello;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,18 +12,18 @@ import java.util.Map;
 public class GreetingService {
     private Map<Integer, Greeting> greetingMap = new HashMap<Integer, Greeting>();
 
-    public Greeting generateGreeting(String name) {
-        Greeting greeting = new Greeting();
-        greeting.setGreeting("Hellooo");
-        greeting.setName(name);
-
-        if (StringUtils.hasText(name)) {
-            greeting.setName(name);
-        } else {
-            greeting.setName("World");
-        }
-        return greeting;
-    }
+//    public Greeting generateGreeting(String name) {
+//        Greeting greeting = new Greeting();
+//        greeting.setGreeting("Hellooo");
+//        greeting.setName(name);
+//
+//        if (StringUtils.hasText(name)) {
+//            greeting.setName(name);
+//        } else {
+//            greeting.setName("World");
+//        }
+//        return greeting;
+//    }
 
     public Greeting getGreeting(Integer index) {
         return greetingMap.get(index);
@@ -34,6 +35,33 @@ public class GreetingService {
     }
 
     public List<Greeting> getAllGreetings() {
+        // List.copyOf() because .values() returns a collection and needs to be cast to List type
         return List.copyOf(greetingMap.values());
+    }
+
+    public Greeting updateGreeting(Integer index, Greeting updatedGreeting) {
+        Greeting greetingToUpdate = greetingMap.get(index);
+
+        greetingToUpdate.setName(updatedGreeting.getName());
+        greetingToUpdate.setGreeting(updatedGreeting.getGreeting());
+
+        greetingMap.put(index, greetingToUpdate);
+
+        return greetingToUpdate;
+    }
+
+    public void deleteGreeting(Integer index) {
+        greetingMap.remove(index);
+    }
+
+    public List<Greeting> findGreetingsByNameAndGreeting(String name, String greetingName) {
+        List<Greeting> greetingsFound = new ArrayList<Greeting>();
+
+        for(Greeting greeting : greetingMap.values()) {
+            if(greeting.getName().equalsIgnoreCase(name) && greeting.getGreeting().equalsIgnoreCase(greetingName)) {
+                greetingsFound.add(greeting);
+            }
+        }
+        return greetingsFound;
     }
 }
