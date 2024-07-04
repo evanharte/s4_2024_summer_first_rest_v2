@@ -12,19 +12,6 @@ import java.util.Map;
 public class GreetingService {
     private Map<Integer, Greeting> greetingMap = new HashMap<Integer, Greeting>();
 
-//    public Greeting generateGreeting(String name) {
-//        Greeting greeting = new Greeting();
-//        greeting.setGreeting("Hellooo");
-//        greeting.setName(name);
-//
-//        if (StringUtils.hasText(name)) {
-//            greeting.setName(name);
-//        } else {
-//            greeting.setName("World");
-//        }
-//        return greeting;
-//    }
-
     public Greeting getGreeting(Integer index) {
         return greetingMap.get(index);
     }
