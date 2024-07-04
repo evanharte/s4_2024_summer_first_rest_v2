@@ -30,6 +30,12 @@ public class GreetingService {
     }
 
     public Greeting createGreeting(Greeting newGreeting) {
+        if (newGreeting.getLanguages() == null) {
+            ArrayList<Language> languageArrayList = new ArrayList<Language>();
+            languageArrayList.add(new Language());
+
+            newGreeting.setLanguages(languageArrayList);
+        }
         greetingMap.put(greetingMap.size() + 1, newGreeting);
         return newGreeting;
     }
@@ -44,6 +50,7 @@ public class GreetingService {
 
         greetingToUpdate.setName(updatedGreeting.getName());
         greetingToUpdate.setGreeting(updatedGreeting.getGreeting());
+        greetingToUpdate.setLanguages(updatedGreeting.getLanguages());
 
         greetingMap.put(index, greetingToUpdate);
 
